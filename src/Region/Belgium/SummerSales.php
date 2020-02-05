@@ -15,7 +15,7 @@ use Handelsgids\SalesPeriods\AbstractSalesPeriod;
 
 class SummerSales extends AbstractSalesPeriod
 {
-    public function init()
+    public function init(): void
     {
         $this->setName('Summer sales');
         $this->setName('Zomersolden', 'nl');

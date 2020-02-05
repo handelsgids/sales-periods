@@ -12,5 +12,5 @@ namespace Handelsgids\SalesPeriods;
 
 interface SalesPeriodInterface
 {
-    public function init();
+    public function init(): void;
 }

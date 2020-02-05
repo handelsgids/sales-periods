@@ -43,10 +43,10 @@ class SalesPeriod
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @param string $locale
      */
-    public function setName($name, $locale = null)
+    public function setName($name, $locale = null): void
     {
         if ($locale === null) {
             $locale = 'en';
@@ -66,7 +66,7 @@ class SalesPeriod
     /**
      * @param Carbon $startDate
      */
-    protected function setStartDate($startDate)
+    protected function setStartDate($startDate): void
     {
         $this->startDate = $startDate;
     }
@@ -82,7 +82,7 @@ class SalesPeriod
     /**
      * @param Carbon $endDate
      */
-    protected function setEndDate($endDate)
+    protected function setEndDate($endDate): void
     {
         $this->endDate = $endDate;
     }
@@ -98,7 +98,7 @@ class SalesPeriod
     /**
      * @param string $salesRegulationsUrl
      */
-    public function setSalesRegulationsUrl($salesRegulationsUrl)
+    public function setSalesRegulationsUrl($salesRegulationsUrl): void
     {
         $this->salesRegulationsUrl = $salesRegulationsUrl;
     }
@@ -114,7 +114,7 @@ class SalesPeriod
     /**
      * @param string $region
      */
-    public function setRegion($region)
+    public function setRegion($region): void
     {
         $this->region = $region;
     }

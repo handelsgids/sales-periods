@@ -11,6 +11,8 @@
 namespace Handelsgids\SalesPeriods;
 
 use Handelsgids\SalesPeriods\Model\SalesPeriod;
+use ReflectionClass;
+use ReflectionException;
 
 abstract class AbstractSalesPeriod extends SalesPeriod implements SalesPeriodInterface
 {
@@ -19,19 +21,19 @@ abstract class AbstractSalesPeriod extends SalesPeriod implements SalesPeriodInt
 
     /**
      * @param null|int $year
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function __construct($year = null)
     {
         if ($year === null) {
-            $year = date('Y');
+            $year = (int) date('Y');
         }
 
         $this->setYear($year);
 
         $this->init();
 
-        $reflection = new \ReflectionClass($this);
+        $reflection = new ReflectionClass($this);
         $namespace = $reflection->getNamespaceName();
         $region = substr($namespace, strrpos($namespace, '\\') + 1);
 
@@ -49,7 +51,7 @@ abstract class AbstractSalesPeriod extends SalesPeriod implements SalesPeriodInt
     /**
      * @param int $year
      */
-    public function setYear($year)
+    public function setYear($year): void
     {
         $this->year = $year;
     }
