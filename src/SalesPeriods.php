@@ -11,8 +11,11 @@
 namespace Handelsgids\SalesPeriods;
 
 use Carbon\Carbon;
+use DateTime;
+use Exception;
 use Handelsgids\SalesPeriods\Exception\NoPeriodsFoundForRegionException;
 use Handelsgids\SalesPeriods\Model\SalesPeriod;
+use ReflectionException;
 
 class SalesPeriods
 {
@@ -33,7 +36,7 @@ class SalesPeriods
         }
 
         if ($year === null) {
-            $year = date('Y');
+            $year = (int) date('Y');
         }
 
         $this->region = $region;
@@ -41,13 +44,13 @@ class SalesPeriods
     }
 
     /**
-     * @param \DateTime $date
+     * @param DateTime $date
      * @param bool $returnPeriodMeta
      * @return bool|SalesPeriod
      * @throws NoPeriodsFoundForRegionException
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
-    public function inSalesPeriod(\DateTime $date, $returnPeriodMeta = null)
+    public function inSalesPeriod(DateTime $date, $returnPeriodMeta = null)
     {
         $carbon = Carbon::instance($date);
 
@@ -72,33 +75,35 @@ class SalesPeriods
     }
 
     /**
-     * @return array
+     * @return SalesPeriod[]
      * @throws NoPeriodsFoundForRegionException
-     * @throws \ReflectionException
      */
     public function getSalesPeriods()
     {
         $namespace = sprintf('Handelsgids\\SalesPeriods\\Region\\%s\\', $this->region);
         $path = sprintf(__DIR__ . '/Region/%s/', $this->region);
 
+        $periods = [];
+
         try {
             $periodFiles = scandir($path, SCANDIR_SORT_ASCENDING);
-        } catch (\Exception $e) {
+
+            if ($periodFiles !== false) {
+                $periodClasses = array_diff($periodFiles, array('.', '..'));
+                $periodClasses = array_map(function ($value) {
+                    return str_replace('.php', '', $value);
+                }, $periodClasses);
+
+                foreach ($periodClasses as $periodClass) {
+                    $class = $namespace . $periodClass;
+                    $periods[] = new $class($this->year);
+                }
+            }
+        } catch (Exception $e) {
             throw new NoPeriodsFoundForRegionException(
                 'No sales periods found for set region. Make sure the region you set actually exists. ' . PHP_EOL .
                 'Available regions are: ' . implode(', ', Regions::all())
             );
-        }
-
-        $periodClasses = array_diff($periodFiles, array('.', '..'));
-        $periodClasses = array_map(function ($value) {
-            return str_replace('.php', '', $value);
-        }, $periodClasses);
-
-        $periods = array();
-        foreach ($periodClasses as $periodClass) {
-            $class = $namespace . $periodClass;
-            $periods[] = new $class($this->year);
         }
 
         return $periods;

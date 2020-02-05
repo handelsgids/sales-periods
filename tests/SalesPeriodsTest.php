@@ -16,12 +16,15 @@ class SalesPeriodsTest extends TestCase
     /** @var SalesPeriods */
     private $belgianSalesPeriods;
 
-    protected function setUp()
+    protected function setUp(): void
     {
-        $this->belgianSalesPeriods = new SalesPeriods(Regions::DEFAULT_REGION);
+        $this->belgianSalesPeriods = new SalesPeriods(
+            Regions::DEFAULT_REGION,
+            2018
+        );
     }
 
-    public function testNumberOfBelgianSalesPeriods()
+    public function testNumberOfBelgianSalesPeriods(): void
     {
         /** @var AbstractSalesPeriod[] $periods */
         $periods = $this->belgianSalesPeriods->getSalesPeriods();
@@ -29,35 +32,35 @@ class SalesPeriodsTest extends TestCase
         $this->assertCount(2, $periods);
     }
 
-    public function testSalesPeriodStartsOnJanuaryThirth()
+    public function testSalesPeriodStartsOnJanuaryThirth(): void
     {
         $belgianWinterSales = new WinterSales(2018);
 
         $this->assertEquals(new Carbon('2018-01-03'), $belgianWinterSales->getStartDate());
     }
 
-    public function testSalesPeriodStartsOnJanuarySecondIfJanuaryThirthFallsOnASunday()
+    public function testSalesPeriodStartsOnJanuarySecondIfJanuaryThirthFallsOnASunday(): void
     {
         $belgianWinterSales = new WinterSales(2016);
 
         $this->assertEquals(new Carbon('2016-01-02'), $belgianWinterSales->getStartDate());
     }
 
-    public function testSalesPeriodStartsOnJulyFirst()
+    public function testSalesPeriodStartsOnJulyFirst(): void
     {
         $belgianSummerSales = new SummerSales(2017);
 
         $this->assertEquals(new Carbon('2017-07-01'), $belgianSummerSales->getStartDate());
     }
 
-    public function testSalesPeriodStartsOnJuneThirtiethIfFirstOfJulyFallsOnASunday()
+    public function testSalesPeriodStartsOnJuneThirtiethIfFirstOfJulyFallsOnASunday(): void
     {
         $belgianSummerSales = new SummerSales(2018);
 
         $this->assertEquals(new Carbon('2018-06-30'), $belgianSummerSales->getStartDate());
     }
 
-    public function testNonExistingRegion()
+    public function testNonExistingRegion(): void
     {
         $this->expectException(NoPeriodsFoundForRegionException::class);
 
@@ -65,21 +68,21 @@ class SalesPeriodsTest extends TestCase
         $dutchSalesPeriods->getSalesPeriods();
     }
 
-    public function testInSalesPeriod()
+    public function testInSalesPeriod(): void
     {
         $inSalesPeriod = $this->belgianSalesPeriods->inSalesPeriod(new \DateTime('2018-06-30'));
 
         $this->assertTrue($inSalesPeriod);
     }
 
-    public function testNotInSalesPeriod()
+    public function testNotInSalesPeriod(): void
     {
         $inSalesPeriod = $this->belgianSalesPeriods->inSalesPeriod(new \DateTime('2018-08-01'));
 
         $this->assertFalse($inSalesPeriod);
     }
 
-    public function testSalesPeriodIsInBelgium()
+    public function testSalesPeriodIsInBelgium(): void
     {
         $belgianSummerSales = new SummerSales();
 

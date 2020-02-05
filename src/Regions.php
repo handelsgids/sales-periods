@@ -18,19 +18,20 @@ final class Regions
     const DEFAULT_REGION = 'Belgium';
 
     /**
-     * Get a list of all available regions.
-     *
-     * @return array
+     * @return string[]
      */
     public static function all()
     {
         $regionPathPattern = __DIR__ . '/Region/*';
         $availableRegions = glob($regionPathPattern, GLOB_ONLYDIR);
 
-        $availableRegions = array_map(function ($regionPath) {
-            return substr($regionPath, strrpos($regionPath, DIRECTORY_SEPARATOR) + 1);
-        }, $availableRegions);
+        $output = [];
+        if ($availableRegions !== false) {
+            $output = array_map(function ($regionPath) {
+                return substr($regionPath, strrpos($regionPath, DIRECTORY_SEPARATOR) + 1);
+            }, $availableRegions);
+        }
 
-        return $availableRegions;
+        return $output;
     }
 }
