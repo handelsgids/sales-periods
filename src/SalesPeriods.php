@@ -90,7 +90,7 @@ class SalesPeriods
 
             if ($periodFiles !== false) {
                 $periodClasses = array_diff($periodFiles, array('.', '..'));
-                $periodClasses = array_map(function ($value) {
+                $periodClasses = array_map(function($value) {
                     return str_replace('.php', '', $value);
                 }, $periodClasses);
 

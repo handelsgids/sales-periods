@@ -27,7 +27,7 @@ final class Regions
 
         $output = [];
         if ($availableRegions !== false) {
-            $output = array_map(function ($regionPath) {
+            $output = array_map(function($regionPath) {
                 return substr($regionPath, strrpos($regionPath, DIRECTORY_SEPARATOR) + 1);
             }, $availableRegions);
         }
