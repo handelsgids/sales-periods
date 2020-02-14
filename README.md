@@ -1,3 +1,5 @@
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/handelsgids/sales-periods/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/handelsgids/sales-periods/?branch=master)
+
 # Sales periods
 
 ## Introduction
