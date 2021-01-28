@@ -25,9 +25,15 @@ class WinterSales extends AbstractSalesPeriod
         if ($startDate->dayOfWeekIso === 7) {
             $startDate = $startDate->subDay();
         }
+        if ($this->getYear() === 2021) {
+            $startDate = new Carbon('2021-01-04');
+        }
         $this->setStartDate($startDate);
 
         $endDate = new Carbon($this->getYear() . '-01-31');
+        if ($this->getYear() === 2021) {
+            $endDate = new Carbon('2021-02-14');
+        }
         $this->setEndDate($endDate);
 
         $this->setSalesRegulationsUrl(

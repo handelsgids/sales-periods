@@ -88,4 +88,12 @@ class SalesPeriodsTest extends TestCase
 
         $this->assertEquals('Belgium', $belgianSummerSales->getRegion());
     }
+
+    public function testCovidExceptionsBelgium(): void
+    {
+        $belgianWinterSales = new WinterSales(2021);
+
+        $this->assertEquals(new Carbon('2021-01-04'), $belgianWinterSales->getStartDate());
+        $this->assertEquals(new Carbon('2021-02-14'), $belgianWinterSales->getEndDate());
+    }
 }
