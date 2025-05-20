@@ -26,7 +26,7 @@ $salesPeriods = $belgianSalesPeriods->getSalesPeriods();
 
 foreach ($salesPeriods as $salesPeriod) {
     $output = sprintf(
-        '%s running from %s untill %s.',
+        '%s running from %s until %s.',
         $salesPeriod->getName(),
         $salesPeriod->getStartDate(),
         $salesPeriod->getEndDate()
@@ -37,8 +37,8 @@ foreach ($salesPeriods as $salesPeriod) {
 
 The above example will output:
 ```
-Summer sales running from 2018-06-30 untill 2018-07-31.
-Winter sales running from 2018-01-03 untill 2018-01-31.
+Summer sales running from 2018-06-30 until 2018-07-31.
+Winter sales running from 2018-01-03 until 2018-01-31.
 ```
 
 ### Check if a date is in a sales period
